@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LYLIA-PANEL | Cyber Access</title>
+    <style>
+        :root {
+            --neon-pink: #ff2a6d;
+            --neon-blue: #05d9e8;
+            --neon-purple: #d300c5;
+            --neon-green: #00ff9d;
+            --dark-bg: #0d0221;
+            --darker-bg: #05010a;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--neon-blue);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 42, 109, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(5, 217, 232, 0.1) 0%, transparent 20%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        h1 {
+            color: var(--neon-pink);
+            font-size: 3.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+            animation: flicker 3s infinite alternate;
+            letter-spacing: 5px;
+        }
+
+        h2 {
+            color: var(--neon-green);
+            margin-top: 10px;
+            font-size: 1.5rem;
+        }
+
+        .access-form {
+            background-color: rgba(13, 2, 33, 0.7);
+            border: 1px solid var(--neon-purple);
+            box-shadow: 0 0 15px var(--neon-purple);
+            padding: 30px;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: 0 auto 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--neon-blue);
+            font-size: 1.1rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--darker-bg);
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-green);
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        button {
+            background-color: var(--neon-purple);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 3px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: var(--neon-pink);
+            box-shadow: 0 0 15px var(--neon-pink);
+            transform: translateY(-2px);
+        }
+
+        .entries-container {
+            margin-top: 50px;
+        }
+
+        .entries-title {
+            color: var(--neon-green);
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 5px var(--neon-green);
+        }
+
+        .entries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .entry-card {
+            background-color: rgba(5, 1, 10, 0.8);
+            border: 1px solid var(--neon-blue);
+            padding: 20px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .entry-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(5, 217, 232, 0.3);
+            border-color: var(--neon-green);
+        }
+
+        .entry-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple), var(--neon-blue));
+        }
+
+        .entry-number {
+            color: var(--neon-pink);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            word-break: break-all;
+        }
+
+        .entry-role {
+            color: var(--neon-green);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            padding: 3px 10px;
+            background-color: rgba(0, 255, 157, 0.1);
+            border-radius: 3px;
+        }
+
+        .entry-timestamp {
+            color: var(--neon-blue);
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding: 20px;
+            color: var(--neon-blue);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(5, 217, 232, 0.2);
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+
+        /* Glitch effect */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before, .glitch::after {
+            content: 'LYLIA-PANEL';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+        }
+
+        .glitch::before {
+            color: var(--neon-purple);
+            animation: glitch-effect 3s infinite linear alternate-reverse;
+            z-index: -1;
+        }
+
+        .glitch::after {
+            color: var(--neon-green);
+            animation: glitch-effect 2s infinite linear alternate-reverse;
+            z-index: -2;
+        }
+
+        @keyframes glitch-effect {
+            0% {
+                transform: translate(-2px, 2px);
+                clip-path: polygon(0 20%, 100% 20%, 100% 25%, 0 25%);
+            }
+            20% {
+                transform: translate(2px, -2px);
+                clip-path: polygon(0 60%, 100% 60%, 100% 65%, 0 65%);
+            }
+            40% {
+                transform: translate(-2px, 2px);
+                clip-path: polygon(0 40%, 100% 40%, 100% 45%, 0 45%);
+            }
+            60% {
+                transform: translate(2px, -2px);
+                clip-path: polygon(0 80%, 100% 80%, 100% 85%, 0 85%);
+            }
+            80% {
+                transform: translate(-2px, 2px);
+                clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
+            }
+            100% {
+                transform: translate(0);
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            .access-form {
+                padding: 20px;
+            }
+            .entries-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="glitch">LYLIA-PANEL</h1>
+            <h2>CYBER ACCESS CONTROL</h2>
+        </header>
+
+        <div class="access-form">
+            <div class="form-group">
+                <label for="whatsapp-number">WHATSAPP NUMBER</label>
+                <input type="text" id="whatsapp-number" placeholder="Enter your WhatsApp number with country code">
+            </div>
+            <div class="form-group">
+                <label for="role-select">SELECT YOUR ROLE</label>
+                <select id="role-select">
+                    <option value="">-- CHOOSE ROLE --</option>
+                    <option value="RESELLER PANEL">RESELLER PANEL</option>
+                    <option value="ADMIN PANEL">ADMIN PANEL</option>
+                    <option value="PT PANEL">PT PANEL</option>
+                    <option value="OWN PANEL">OWN PANEL</option>
+                    <option value="LEADER PANEL">LEADER PANEL</option>
+                    <option value="PEMILIK PANEL">PEMILIK PANEL</option>
+                </select>
+            </div>
+            <button id="submit-btn">GRANT ACCESS</button>
+        </div>
+
+        <div class="entries-container">
+            <h2 class="entries-title">ACTIVE ACCESS LIST</h2>
+            <div class="entries-grid" id="entries-grid">
+                <!-- Entries will be added here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © LYLIA-PANEL | WEB INI DIBUAT OLEH DEADLOX
+    </footer>
+
+    <script>
+        // Store entries in localStorage
+        let entries = JSON.parse(localStorage.getItem('lyliaPanelEntries')) || [];
+
+        // Form submission
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const number = document.getElementById('whatsapp-number').value.trim();
+            const role = document.getElementById('role-select').value;
+
+            if (!number) {
+                alert('Please enter your WhatsApp number');
+                return;
+            }
+
+            if (!role) {
+                alert('Please select your role');
+                return;
+            }
+
+            // Create new entry
+            const newEntry = {
+                number: number,
+                role: role,
+                timestamp: new Date().toLocaleString()
+            };
+
+            // Add to entries array
+            entries.push(newEntry);
+
+            // Save to localStorage
+            localStorage.setItem('lyliaPanelEntries', JSON.stringify(entries));
+
+            // Update display
+            displayEntries();
+
+            // Clear form
+            document.getElementById('whatsapp-number').value = '';
+            document.getElementById('role-select').value = '';
+
+            // Scroll to entries
+            document.querySelector('.entries-container').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Display all entries
+        function displayEntries() {
+            const grid = document.getElementById('entries-grid');
+            grid.innerHTML = '';
+
+            entries.forEach(entry => {
+                const card = document.createElement('div');
+                card.className = 'entry-card';
+                card.innerHTML = `
+                    <div class="entry-number">${entry.number}</div>
+                    <div class="entry-role">${entry.role}</div>
+                    <div class="entry-timestamp">Registered: ${entry.timestamp}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Initial display
+        displayEntries();
+
+        // Add some glitch effects randomly
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                document.body.style.filter = 'hue-rotate(90deg)';
+                setTimeout(() => {
+                    document.body.style.filter = '';
+                }, 100);
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
